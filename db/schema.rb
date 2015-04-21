@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150420170945) do
+ActiveRecord::Schema.define(version: 20150421155446) do
 
   create_table "emergencies", id: false, force: :cascade do |t|
     t.string   "code",             null: false
@@ -25,11 +25,13 @@ ActiveRecord::Schema.define(version: 20150420170945) do
   add_index "emergencies", ["code"], name: "index_emergencies_on_sku", unique: true
 
   create_table "responders", id: false, force: :cascade do |t|
-    t.string   "name",       null: false
+    t.string   "name",                           null: false
     t.string   "type"
     t.integer  "capacity"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "on_duty",        default: false
+    t.string   "emergency_code"
   end
 
   add_index "responders", ["name"], name: "index_responders_on_name", unique: true
