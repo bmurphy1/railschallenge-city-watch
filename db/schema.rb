@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(version: 20150420170945) do
     t.integer  "fire_severity"
     t.integer  "police_severity"
     t.integer  "medical_severity"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "emergencies", ["code"], name: "index_emergencies_on_sku", unique: true
@@ -28,8 +28,8 @@ ActiveRecord::Schema.define(version: 20150420170945) do
     t.string   "name",       null: false
     t.string   "type"
     t.integer  "capacity"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "responders", ["name"], name: "index_responders_on_name", unique: true

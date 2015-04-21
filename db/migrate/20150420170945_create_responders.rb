@@ -5,7 +5,7 @@ class CreateResponders < ActiveRecord::Migration
       t.string :type
       t.integer :capacity
 
-      t.timestamps null: false
+      t.timestamps
     end
 
     add_index :responders, ["name"], name: "index_responders_on_name", unique: true, using: :btree

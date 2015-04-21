@@ -6,7 +6,7 @@ class CreateEmergencies < ActiveRecord::Migration
       t.integer :police_severity
       t.integer :medical_severity
 
-      t.timestamps null: false
+      t.timestamps
     end
 
     add_index :emergencies, ["code"], name: "index_emergencies_on_sku", unique: true, using: :btree
