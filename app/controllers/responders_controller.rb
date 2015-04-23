@@ -4,10 +4,12 @@ class RespondersController < ApplicationController
   def index
     @responders = Responder.all
 
-    if @responders
+    if @responders.empty?
       render json: {responders: []}
     else
-      render json: @responders
+      render json: { responders: @responders }
+    end
+  end
 
   def show
     @responders = Responder.where("name == ?", params[:name])
@@ -23,7 +25,7 @@ class RespondersController < ApplicationController
     @responder = Responder.new(responder_params)
 
     if @responder.save
-      render json: @responder, status: :created
+      render json: { "responder" => @responder }, status: :created
     else
       render json: { message: @responder.errors }, status: :unprocessable_entity
     end
