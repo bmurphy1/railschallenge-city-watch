@@ -32,6 +32,13 @@ class RespondersController < ApplicationController
   end
 
   def update
+    @responder = Responder.where("name = ?", params[:name]).first
+
+    if @responder.update_attributes(update_responder_params)
+      render json: { "responder" => @responder}
+    else
+      render json: { message: @responder.errors }, status: :unprocessable_entity
+    end
   end
 
   #Unused routes - new, edit, destroy
@@ -48,6 +55,11 @@ class RespondersController < ApplicationController
 
   def responder_params
     params.require(:responder).permit([:name, :type, :capacity])
+  end
+
+  def update_responder_params
+    params.require(:responder).permit([:type, :on_duty])
+
   end
 
   def page_not_found
