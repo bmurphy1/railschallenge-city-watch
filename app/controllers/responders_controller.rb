@@ -8,6 +8,14 @@ class RespondersController < ApplicationController
       render json: {responders: []}
     else
       render json: @responders
+
+  def show
+    @responders = Responder.where("name == ?", params[:name])
+
+    if @responders.empty?
+      render nothing: true, status: 404
+    else
+      render json: { "responder" => @responders.first }, status: 200
     end
   end
 
@@ -37,7 +45,7 @@ class RespondersController < ApplicationController
   private
 
   def responder_params
-    params.require(:responder).except([:id]).permit([:name, :type, :capacity])
+    params.require(:responder).permit([:name, :type, :capacity])
   end
 
   def page_not_found
