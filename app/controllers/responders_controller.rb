@@ -4,20 +4,16 @@ class RespondersController < ApplicationController
   def index
     @responders = Responder.all
 
-    if @responders.empty?
-      render json: {responders: []}
-    else
-      render json: { responders: @responders }
-    end
+    render "index.json"
   end
 
   def show
-    @responders = Responder.where("name == ?", params[:name])
+    @responder = Responder.where("name == ?", params[:name]).first
 
-    if @responders.empty?
-      render nothing: true, status: 404
+    if @responder
+      render "show.json", status: 200
     else
-      render json: { "responder" => @responders.first }, status: 200
+      render nothing: true, status: 404
     end
   end
 
@@ -25,9 +21,9 @@ class RespondersController < ApplicationController
     @responder = Responder.new(responder_params)
 
     if @responder.save
-      render json: { "responder" => @responder }, status: :created
+      render "show.json", status: :created
     else
-      render json: { message: @responder.errors }, status: :unprocessable_entity
+      render "errors.json", status: :unprocessable_entity
     end
   end
 
@@ -35,9 +31,9 @@ class RespondersController < ApplicationController
     @responder = Responder.where("name = ?", params[:name]).first
 
     if @responder.update_attributes(update_responder_params)
-      render json: { "responder" => @responder}
+      render "show.json"
     else
-      render json: { message: @responder.errors }, status: :unprocessable_entity
+      render "errors.json", status: :unprocessable_entity
     end
   end
 
