@@ -4,6 +4,8 @@ class EmergenciesController < ApplicationController
 
   def index
     @emergencies = Emergency.all
+
+    render "index.json"
   end
 
   def show
