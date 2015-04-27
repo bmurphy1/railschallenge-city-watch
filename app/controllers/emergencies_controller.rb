@@ -22,6 +22,14 @@ class EmergenciesController < ApplicationController
     end
   end
 
+  def update
+    if @emergency.update_attributes(update_emergency_params)
+      render "show.json"
+    else
+      render "errors.json", status: :unprocessable_entity
+    end
+  end
+
   def new
   end
 
@@ -34,11 +42,15 @@ class EmergenciesController < ApplicationController
   private
 
   def set_emergency
-    @emergency = Emergency.find(emergency_params[:code])
+    @emergency = Emergency.find(params[:code])
   end
 
   def emergency_params
     params.require(:emergency).permit([:code, :fire_severity, :police_severity, :medical_severity])
+  end
+
+  def update_emergency_params
+    params.require(:emergency).permit([:code, :resolved_at, :fire_severity, :police_severity, :medical_severity])
   end
 
   def page_not_found
